@@ -53,8 +53,6 @@ public class RobotState {
     public void updateOdometry(SwerveDrivetrain.SwerveDriveState state) {
 
         Pose2d robotPose = state.Pose;
-
-        /* Telemeterize the pose */
         Logger.recordOutput("Drive/Odometry", robotPose);
 
         /* Telemeterize the robot's general speeds */
@@ -79,8 +77,8 @@ public class RobotState {
            Logger.recordOutput("Module " + i, m_moduleMechanisms[i]);
         }
 
-        SignalLogger.writeDoubleArray("odometry", new double[] {robotPose.getX(), robotPose.getY(), robotPose.getRotation().getDegrees()});
-        SignalLogger.writeDouble("odom period", state.OdometryPeriod, "seconds");
+        SignalLogger.writeDoubleArray("Odometry", new double[] {robotPose.getX(), robotPose.getY(), robotPose.getRotation().getDegrees()});
+        SignalLogger.writeDouble("Odometry period", state.OdometryPeriod, "seconds");
     }
 
 }

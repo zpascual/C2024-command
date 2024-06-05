@@ -41,7 +41,7 @@ public class Robot extends LoggedRobot
     @Override
     public void robotInit()
     {
-        Logger.recordMetadata("Project Name","C2024 Command Rewrite");
+        Logger.recordMetadata("ProjectName", "C2024 Command Rewrite");
         if (isReal()) {
             Logger.addDataReceiver(new WPILOGWriter());
             Logger.addDataReceiver(new NT4Publisher());
