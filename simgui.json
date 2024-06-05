@@ -1,0 +1,93 @@
+{
+  "HALProvider": {
+    "Other Devices": {
+      "window": {
+        "visible": false
+      }
+    }
+  },
+  "NTProvider": {
+    "types": {
+      "/AdvantageKit/RealOutputs/Module 0": "Mechanism2d",
+      "/AdvantageKit/RealOutputs/Module 1": "Mechanism2d",
+      "/AdvantageKit/RealOutputs/Module 2": "Mechanism2d",
+      "/AdvantageKit/RealOutputs/Module 3": "Mechanism2d",
+      "/FMSInfo": "FMSInfo"
+    },
+    "windows": {
+      "/AdvantageKit/RealOutputs/Module 0": {
+        "window": {
+          "visible": true
+        }
+      },
+      "/AdvantageKit/RealOutputs/Module 1": {
+        "window": {
+          "visible": true
+        }
+      },
+      "/AdvantageKit/RealOutputs/Module 2": {
+        "window": {
+          "visible": true
+        }
+      },
+      "/AdvantageKit/RealOutputs/Module 3": {
+        "window": {
+          "visible": true
+        }
+      }
+    }
+  },
+  "NetworkTables": {
+    "Persistent Values": {
+      "open": false
+    },
+    "transitory": {
+      "AdvantageKit": {
+        "RealOutputs": {
+          "Drive": {
+            "open": true
+          },
+          "open": true
+        },
+        "open": true
+      },
+      "Shuffleboard": {
+        "open": true
+      }
+    }
+  },
+  "NetworkTables Info": {
+    "visible": true
+  },
+  "Plot": {
+    "Plot <0>": {
+      "plots": [
+        {
+          "backgroundColor": [
+            0.0,
+            0.0,
+            0.0,
+            0.8500000238418579
+          ],
+          "height": 338
+        }
+      ],
+      "window": {
+        "visible": false
+      }
+    },
+    "Plot <1>": {
+      "plots": [
+        {
+          "backgroundColor": [
+            0.0,
+            0.0,
+            0.0,
+            0.8500000238418579
+          ],
+          "height": 338
+        }
+      ]
+    }
+  }
+}
