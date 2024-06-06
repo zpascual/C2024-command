@@ -8,6 +8,10 @@
   },
   "NTProvider": {
     "types": {
+      "/AdvantageKit/RealOutputs/Drive/Module 0": "Mechanism2d",
+      "/AdvantageKit/RealOutputs/Drive/Module 1": "Mechanism2d",
+      "/AdvantageKit/RealOutputs/Drive/Module 2": "Mechanism2d",
+      "/AdvantageKit/RealOutputs/Drive/Module 3": "Mechanism2d",
       "/AdvantageKit/RealOutputs/Module 0": "Mechanism2d",
       "/AdvantageKit/RealOutputs/Module 1": "Mechanism2d",
       "/AdvantageKit/RealOutputs/Module 2": "Mechanism2d",
@@ -15,22 +19,7 @@
       "/FMSInfo": "FMSInfo"
     },
     "windows": {
-      "/AdvantageKit/RealOutputs/Module 0": {
-        "window": {
-          "visible": true
-        }
-      },
-      "/AdvantageKit/RealOutputs/Module 1": {
-        "window": {
-          "visible": true
-        }
-      },
-      "/AdvantageKit/RealOutputs/Module 2": {
-        "window": {
-          "visible": true
-        }
-      },
-      "/AdvantageKit/RealOutputs/Module 3": {
+      "/AdvantageKit/RealOutputs/Drive/Module 0": {
         "window": {
           "visible": true
         }
@@ -87,7 +76,10 @@
           ],
           "height": 338
         }
-      ]
+      ],
+      "window": {
+        "visible": false
+      }
     }
   }
 }

@@ -69,7 +69,7 @@ public class RobotContainer {
         driverController.start().and(driverController.back()).onTrue(drivetrain.runOnce(drivetrain::seedFieldRelative));
 
         if (Utils.isSimulation()) {
-            drivetrain.seedFieldRelative(new Pose2d(new Translation2d(), Rotation2d.fromDegrees(90)));
+            drivetrain.seedFieldRelative(new Pose2d(new Translation2d(), Rotation2d.fromDegrees(0)));
         }
 
         drivetrain.registerTelemetry(robotState::updateOdometry);

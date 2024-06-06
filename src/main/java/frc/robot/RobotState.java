@@ -9,9 +9,7 @@ import edu.wpi.first.wpilibj.smartdashboard.Mechanism2d;
 import edu.wpi.first.wpilibj.smartdashboard.MechanismLigament2d;
 import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj.util.Color8Bit;
-import org.littletonrobotics.junction.LogTable;
 import org.littletonrobotics.junction.Logger;
-import org.littletonrobotics.junction.inputs.LoggableInputs;
 
 public class RobotState {
     private final double maxSpeed;
@@ -21,32 +19,32 @@ public class RobotState {
         SignalLogger.start();
     }
 
-    private Pose2d m_lastPose = new Pose2d();
+    private Pose2d lastPose = new Pose2d();
     private double lastTimestamp = Utils.getCurrentTimeSeconds();
 
     /* Mechanisms to represent the swerve module states */
-    private final Mechanism2d[] m_moduleMechanisms = new Mechanism2d[] {
+    private final Mechanism2d[] moduleMechanisms = new Mechanism2d[] {
             new Mechanism2d(1, 1),
             new Mechanism2d(1, 1),
             new Mechanism2d(1, 1),
             new Mechanism2d(1, 1),
     };
     /* A direction and length changing ligament for speed representation */
-    private final MechanismLigament2d[] m_moduleSpeeds = new MechanismLigament2d[] {
-            m_moduleMechanisms[0].getRoot("RootSpeed", 0.5, 0.5).append(new MechanismLigament2d("Speed", 0.5, 0)),
-            m_moduleMechanisms[1].getRoot("RootSpeed", 0.5, 0.5).append(new MechanismLigament2d("Speed", 0.5, 0)),
-            m_moduleMechanisms[2].getRoot("RootSpeed", 0.5, 0.5).append(new MechanismLigament2d("Speed", 0.5, 0)),
-            m_moduleMechanisms[3].getRoot("RootSpeed", 0.5, 0.5).append(new MechanismLigament2d("Speed", 0.5, 0)),
+    private final MechanismLigament2d[] moduleSpeeds = new MechanismLigament2d[] {
+            moduleMechanisms[0].getRoot("RootSpeed", 0.5, 0.5).append(new MechanismLigament2d("Speed", 0.5, 0)),
+            moduleMechanisms[1].getRoot("RootSpeed", 0.5, 0.5).append(new MechanismLigament2d("Speed", 0.5, 0)),
+            moduleMechanisms[2].getRoot("RootSpeed", 0.5, 0.5).append(new MechanismLigament2d("Speed", 0.5, 0)),
+            moduleMechanisms[3].getRoot("RootSpeed", 0.5, 0.5).append(new MechanismLigament2d("Speed", 0.5, 0)),
     };
     /* A direction changing and length constant ligament for module direction */
-    private final MechanismLigament2d[] m_moduleDirections = new MechanismLigament2d[] {
-            m_moduleMechanisms[0].getRoot("RootDirection", 0.5, 0.5)
+    private final MechanismLigament2d[] moduleDirections = new MechanismLigament2d[] {
+            moduleMechanisms[0].getRoot("RootDirection", 0.5, 0.5)
                     .append(new MechanismLigament2d("Direction", 0.1, 0, 0, new Color8Bit(Color.kWhite))),
-            m_moduleMechanisms[1].getRoot("RootDirection", 0.5, 0.5)
+            moduleMechanisms[1].getRoot("RootDirection", 0.5, 0.5)
                     .append(new MechanismLigament2d("Direction", 0.1, 0, 0, new Color8Bit(Color.kWhite))),
-            m_moduleMechanisms[2].getRoot("RootDirection", 0.5, 0.5)
+            moduleMechanisms[2].getRoot("RootDirection", 0.5, 0.5)
                     .append(new MechanismLigament2d("Direction", 0.1, 0, 0, new Color8Bit(Color.kWhite))),
-            m_moduleMechanisms[3].getRoot("RootDirection", 0.5, 0.5)
+            moduleMechanisms[3].getRoot("RootDirection", 0.5, 0.5)
                     .append(new MechanismLigament2d("Direction", 0.1, 0, 0, new Color8Bit(Color.kWhite))),
     };
 
@@ -55,26 +53,31 @@ public class RobotState {
         Pose2d robotPose = state.Pose;
         Logger.recordOutput("Drive/Odometry", robotPose);
 
-        /* Telemeterize the robot's general speeds */
+        /* Telemeter the robot's general speeds */
         double currentTime = Utils.getCurrentTimeSeconds();
         double diffTime = currentTime - lastTimestamp;
         lastTimestamp = currentTime;
-        Translation2d distanceDiff = robotPose.minus(m_lastPose).getTranslation();
-        m_lastPose = robotPose;
+        Translation2d distanceDiff = robotPose.minus(lastPose).getTranslation();
+        lastPose = robotPose;
 
         Translation2d velocities = distanceDiff.div(diffTime);
 
-        /* Telemeterize the module's states */
+        Logger.recordOutput("Drive/Velocity", velocities.getNorm());
+        Logger.recordOutput("Drive/Velocity X", velocities.getX());
+        Logger.recordOutput("Drive/Velocity Y", velocities.getY());
+        Logger.recordOutput("Drive/Odom Update Freq", state.OdometryPeriod);
+
+        /* Telemeter the module's states */
         for (int i = 0; i < 4; ++i) {
            var moduleState = state.ModuleStates[i];
            var angle = moduleState.angle;
            var speedRatio = moduleState.speedMetersPerSecond / (2 * maxSpeed);
 
-           m_moduleSpeeds[i].setAngle(angle);
-           m_moduleDirections[i].setAngle(angle);
-           m_moduleSpeeds[i].setLength(speedRatio);
+           moduleSpeeds[i].setAngle(angle);
+           moduleDirections[i].setAngle(angle);
+           moduleSpeeds[i].setLength(speedRatio);
 
-           Logger.recordOutput("Module " + i, m_moduleMechanisms[i]);
+           Logger.recordOutput("Drive/Module " + i, moduleMechanisms[i]);
         }
 
         SignalLogger.writeDoubleArray("Odometry", new double[] {robotPose.getX(), robotPose.getY(), robotPose.getRotation().getDegrees()});
